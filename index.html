@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pypro4sail by hectornieto</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Pypro4sail</h1>
+        <p>Prospect5 and 4SAIL Radiative Transfer Models for simulating the transmission of radiation in leaves and canopies</p>
+
+        <p class="view"><a href="https://github.com/hectornieto/pyPro4Sail">View the Project on GitHub <small>hectornieto/pyPro4Sail</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/hectornieto/pyPro4Sail/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/hectornieto/pyPro4Sail/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/hectornieto/pyPro4Sail">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="pypro4sail" class="anchor" href="#pypro4sail" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pyPro4Sail</h1>
+
+<p>Prospect5 and 4SAIL Radiative Transfer Models for simulating the transmission of radiation in leaves and canopies.</p>
+
+<h2>
+<a id="synopsis" class="anchor" href="#synopsis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Synopsis</h2>
+
+<p>This project contains <em>Python</em> code for <em>Prospect</em> and <em>4SAIL</em> Radiative Transfer Models (<strong>RTM</strong>)
+for simulating the transmission of optical and thermal electromagnetic radiation through 
+leaves and vegetated canopies.</p>
+
+<p>The project consists of: </p>
+
+<ol>
+<li><p>lower-level modules with the basic functions needed in <em>Prospec5</em> and <em>4SAIL</em> RTMs.</p></li>
+<li><p>higher-level scripts for easily running ProSAIL in both forward and inverse mode.</p></li>
+</ol>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Download the project to your local system, enter the download directory and then type.</p>
+
+<p><code>python setup.py install</code> </p>
+
+<p>if you want to install pyTSEB and its low-level modules in your Python distribution. </p>
+
+<p>The following Python library ir required for running Prospect and 4SAIL:</p>
+
+<ul>
+<li>Numpy</li>
+</ul>
+
+<p>In addition, the inversion of both RTMS requires.</p>
+
+<ul>
+<li><p>Scipy</p></li>
+<li><p>cma [Optional]</p></li>
+</ul>
+
+<h2>
+<a id="code-example" class="anchor" href="#code-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code Example</h2>
+
+<h3>
+<a id="high-level-example" class="anchor" href="#high-level-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>High-level example</h3>
+
+<p>You can automatically run the coupled leaf+canopyt Prospect5+4SAIL RTM with <em>pyPro4Sail.py</em> module.</p>
+
+<div class="highlight highlight-source-python"><pre>[<span class="pl-c1">N</span>, chloro, caroten, brown, <span class="pl-c1">EWT</span>, <span class="pl-c1">LMA</span>, <span class="pl-c1">LAI</span>, hot_spot, solar_zenith, solar_azimuth, view_zenith, view_azimuth, <span class="pl-c1">LIDF</span>]<span class="pl-k">=</span>[<span class="pl-c1">1.5</span>,<span class="pl-c1">40</span>,<span class="pl-c1">8</span>,<span class="pl-c1">0.0</span>,<span class="pl-c1">0.01</span>,<span class="pl-c1">0.009</span>,<span class="pl-c1">3</span>,<span class="pl-c1">0.01</span>,<span class="pl-c1">30</span>,<span class="pl-c1">180</span>,<span class="pl-c1">10</span>,<span class="pl-c1">180</span>,(<span class="pl-k">-</span><span class="pl-c1">0.35</span>,<span class="pl-k">-</span><span class="pl-c1">0.15</span>)]
+<span class="pl-k">import</span> pyPro4SAIL
+wl,rho<span class="pl-k">=</span>pyPro4SAIL.run(<span class="pl-c1">N</span>, chloro, caroten, brown, <span class="pl-c1">EWT</span>, <span class="pl-c1">LMA</span>, <span class="pl-c1">LAI</span>, hot_spot, solar_zenith, solar_azimuth, view_zenith, view_azimuth, <span class="pl-c1">LIDF</span>, <span class="pl-v">skyl</span><span class="pl-k">=</span><span class="pl-c1">0.2</span>, <span class="pl-v">soilType</span><span class="pl-k">=</span>pyPro4SAIL.<span class="pl-c1">DEFAULT_SOIL</span>)</pre></div>
+
+<p>Also it is possible to simulate the surface land-leaving thermal radiance with the function <code>run_TIR</code>.</p>
+
+<h3>
+<a id="low-level-example" class="anchor" href="#low-level-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Low-level example</h3>
+
+<h4>
+<a id="prospect5-rtm" class="anchor" href="#prospect5-rtm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prospect5 RTM</h4>
+
+<p>You can run <em>Prospect</em> by importing the module Prospect5.py and then either calling the function <code>Prospect5</code> 
+for simulating the full optical spectrum (400-2500nm), or the function <code>Prospect5_wl</code> for simulating
+the leaf reflectance and transmittance for a given wavelength.</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-c"># Running Prospect5</span>
+<span class="pl-k">import</span> Prospect5
+<span class="pl-c"># Simulate leaf full optical spectrum (400-2500nm) </span>
+wl, rho_leaf, tau_leaf <span class="pl-k">=</span> Prospect5.Prospect5(<span class="pl-c1">N</span>, chloro, caroten, brown, <span class="pl-c1">EWT</span>, <span class="pl-c1">LMA</span>)
+</pre></div>
+
+<p>You can type
+<code>help(Prospect5.Prospect5)</code>
+to understand better the inputs needed and the outputs returned</p>
+
+<h4>
+<a id="4sail-rtm" class="anchor" href="#4sail-rtm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4SAIL RTM</h4>
+
+<p>You can run <em>4SAIL</em> by importing the module FourSAIL.py and then either calling the function <code>FourSAIL</code> 
+for simulating the reflectance and transmittance factor of a given canopy given a list of leaf reflectances 
+and trasmittances, or you can call the function <code>FourSAIL_wl</code> for simulating the leaf reflectance and transmittance 
+factor of a given canopy at for a single wavelenght.</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-c"># Running the coupled Prospect and 4SAIL</span>
+<span class="pl-k">import</span> Prospect5, FourSAIL
+<span class="pl-c"># Simulate leaf full optical spectrum (400-2500nm) </span>
+wl, rho_leaf, tau_leaf <span class="pl-k">=</span> Prospect5.Prospect5(<span class="pl-c1">N</span>, chloro, caroten, brown, <span class="pl-c1">EWT</span>, <span class="pl-c1">LMA</span>)
+<span class="pl-c"># Estimate the Leaf Inclination Distribution Function of a canopy</span>
+<span class="pl-c1">LIDF</span> <span class="pl-k">=</span> FourSAIL.CalcLIDF_Campbell(alpha)
+<span class="pl-c"># Simulate leaf reflectance and transmittance factors of a canopy </span>
+tss,too,tsstoo,rdd,tdd,rsd,tsd,rdo,tdo,rso,rsos,rsod,rddt,rsdt,rdot,rsodt,rsost,rsot,gammasdf,gammasdb,gammasowl <span class="pl-k">=</span> FourSAIL.FourSAIL(<span class="pl-c1">LAI</span>,hot_spot,<span class="pl-c1">LIDF</span>,solar_zenith,view_zenith,solar_azimuth<span class="pl-k">-</span>view_azimuth,rho_leaf,tau_leaf,rho_soil)
+<span class="pl-c"># Simulate the canopy reflectance factor for a given difuse/total radiation condition (skyl)</span>
+rho_canopy <span class="pl-k">=</span> rdot<span class="pl-k">*</span>skyl<span class="pl-k">+</span>rsot<span class="pl-k">*</span>(<span class="pl-c1">1</span><span class="pl-k">-</span>skyl)</pre></div>
+
+<p>You can type
+<code>help(FourSAIL.FourSAIL)</code>
+to understand better the inputs needed and the outputs returned</p>
+
+<h2>
+<a id="basic-contents" class="anchor" href="#basic-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Contents</h2>
+
+<h3>
+<a id="high-level-modules" class="anchor" href="#high-level-modules" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>High-level modules</h3>
+
+<ul>
+<li>
+<em>.src/pyPro4SAIL.py</em>
+&gt; Runs the coupled Prospect5+4SAIL to estimate the canopy directional reflectance factor and 4SAIL to estimate the land-leaving broadband thermal radiance.</li>
+</ul>
+
+<h3>
+<a id="low-level-modules" class="anchor" href="#low-level-modules" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Low-level modules</h3>
+
+<p>The low-level modules in this project are aimed at providing customisation and more flexibility in running TSEB. 
+The following modules are included.</p>
+
+<ul>
+<li>
+<p><em>.src/Prospect5.py</em></p>
+
+<blockquote>
+<p>core functions for running Prospect5 Leaf Radiative Transfer Model. </p>
+</blockquote>
+</li>
+<li>
+<p><em>.src/Prospect5Jacobian.py</em></p>
+
+<blockquote>
+<p>core functions for computing the Jacobian of Prospect5 Leaf Radiative Transfer Model. </p>
+</blockquote>
+</li>
+<li>
+<p><em>.src/FourSAIL.py</em></p>
+
+<blockquote>
+<p>core functions for running 4SAIL Canopy Radiative Transfer Model.</p>
+</blockquote>
+</li>
+<li>
+<p><em>.src/FourSAILJacobian.py</em></p>
+
+<blockquote>
+<p>core functions for computing the Jacobian of 4SAIL Canopy Radiative Transfer Model.</p>
+</blockquote>
+</li>
+<li>
+<p><em>.src/CostFunctionsPROSPECT4SAIL.py</em></p>
+
+<blockquote>
+<p>merit functions used to invert Prospect and/or 4SAIL from a given spectrum</p>
+</blockquote>
+</li>
+<li>
+<p><em>.src/cma.py</em></p>
+
+<blockquote>
+<p>Covariance Matrix Adaptation Evolution Strategy optimization method for inverting Prospect5 and/or 4SAIL.</p>
+</blockquote>
+</li>
+</ul>
+
+<h2>
+<a id="api-reference" class="anchor" href="#api-reference" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API Reference</h2>
+
+<p><a href="http://pyPro4Sail.readthedocs.org/en/latest/index.html">http://pyPro4Sail.readthedocs.org/en/latest/index.html</a></p>
+
+<h2>
+<a id="main-scientific-references" class="anchor" href="#main-scientific-references" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Main Scientific References</h2>
+
+<ul>
+<li>S. Jacquemoud, F. Baret, PROSPECT: A model of leaf optical properties spectra, Remote Sensing of Environment, Volume 34, Issue 2, November 1990, Pages 75-91, ISSN 0034-4257, <a href="http://dx.doi.org/10.1016/0034-4257(90)90100-Z">http://dx.doi.org/10.1016/0034-4257(90)90100-Z</a>.</li>
+<li>Jean-Baptiste Feret, Christophe François, Gregory P. Asner, Anatoly A. Gitelson, Roberta E. Martin, Luc P.R. Bidel, Susan L. Ustin, Guerric le Maire, Stéphane Jacquemoud, PROSPECT-4 and 5: Advances in the leaf optical properties model separating photosynthetic pigments, Remote Sensing of Environment, Volume 112, Issue 6, 16 June 2008, Pages 3030-3043, ISSN 0034-4257, <a href="http://dx.doi.org/10.1016/j.rse.2008.02.012">http://dx.doi.org/10.1016/j.rse.2008.02.012</a>.</li>
+<li>W. Verhoef, Light scattering by leaf layers with application to canopy reflectance modeling: The SAIL model, Remote Sensing of Environment, Volume 16, Issue 2, October 1984, Pages 125-141, ISSN 0034-4257, <a href="http://dx.doi.org/10.1016/0034-4257(84)90057-9">http://dx.doi.org/10.1016/0034-4257(84)90057-9</a>.</li>
+<li>W. Verhoef, L. Jia, Q. Xiao and Z. Su, Unified Optical-Thermal Four-Stream Radiative Transfer Theory for Homogeneous Vegetation Canopies, IEEE Transactions on Geoscience and Remote Sensing, vol. 45, no. 6, pp. 1808-1822, June 2007. <a href="http://dx.doi.org/10.1109/TGRS.2007.895844">http://dx.doi.org/10.1109/TGRS.2007.895844</a>.</li>
+</ul>
+
+<h2>
+<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tests</h2>
+
+<p><em>to be included</em></p>
+
+<h2>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributors</h2>
+
+<ul>
+<li>
+<strong>Hector Nieto</strong> <a href="mailto:hnieto@ias.csic.es">hnieto@ias.csic.es</a> <a href="mailto:hector.nieto.solana@gmail.com">hector.nieto.solana@gmail.com</a> main developer</li>
+<li>
+<strong>Radoslaw Guzinski</strong> </li>
+<li>
+<strong>Robin Wilson</strong> <a href="mailto:robin@rtwilson.com">robin@rtwilson.com</a> main developer of pyProSail <a href="https://github.com/robintw/PyProSAIL">https://github.com/robintw/PyProSAIL</a>
+</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>pyPro4Sail: a Python Two Source Energy Balance Model</p>
+
+<p>Copyright 2016 Hector Nieto and contributors.</p>
+
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/hectornieto">hectornieto</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
